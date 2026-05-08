@@ -1,0 +1,16 @@
+# Ignorar el .env real (nunca subir credenciales)
+.env
+
+# Logs generados por el backend
+backend/logs/
+
+# Caché de Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Entornos virtuales
+.venv/
+venv/
+env/

@@ -1,0 +1,75 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────
+#  Zenta — Docker Compose
+#  Servicios: db (PostgreSQL) | backend (Flask) | frontend (Nginx)
+# ─────────────────────────────────────────────
+
+services:
+
+  # ── Base de datos PostgreSQL ──────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: zenta_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       ${DB_NAME:-zenta_db}
+      POSTGRES_USER:     ${DB_USER:-zenta_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-zenta_pass}
+    volumes:
+      - db_data:/var/lib/postgresql/data          # datos persistentes
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql:ro  # schema inicial
+    ports:
+      - "5432:5432"   # quitar en producción si no necesitas acceso externo
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-zenta_user} -d ${DB_NAME:-zenta_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Backend Flask / Gunicorn ──────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: zenta_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST:     db
+      DB_PORT:     5432
+      DB_NAME:     ${DB_NAME:-zenta_db}
+      DB_USER:     ${DB_USER:-zenta_user}
+      DB_PASSWORD: ${DB_PASSWORD:-zenta_pass}
+      LOG_DIR:     /app/logs
+    volumes:
+      - backend_logs:/app/logs    # logs persistentes
+    ports:
+      - "5000:5000"   # opcional: acceso directo a la API
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # ── Frontend Nginx (HTML estático + proxy) ────────────────────────────────
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: zenta_frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "80:80"       # acceso principal: http://localhost
+
+# ─────────────────────────────────────────────
+#  Volúmenes persistentes
+# ─────────────────────────────────────────────
+volumes:
+  db_data:
+  backend_logs:
