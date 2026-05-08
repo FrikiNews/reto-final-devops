@@ -8,8 +8,8 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d/zenta.conf
 
 # Copiar archivos HTML estáticos y estilos
-COPY index.html    /usr/share/nginx/html/index.html
-COPY intranet.html /usr/share/nginx/html/intranet.html
+COPY index.html    /usr/share/nginx/html/
+COPY intranet.html /usr/share/nginx/html/
 COPY css/          /usr/share/nginx/html/css/
 
 EXPOSE 80
