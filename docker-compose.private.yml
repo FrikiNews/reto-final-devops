@@ -1,0 +1,65 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  Zenta — EC2 PRIVADA (producción)
+#  Servicios: MongoDB + Backend + Intranet
+#  Uso: docker compose -f docker-compose.private.yml up -d --build
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── MongoDB ─────────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7
+    container_name: zenta_mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-zenta}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS:-zentapass}
+      MONGO_INITDB_DATABASE:      ${MONGO_DB:-zenta_db}
+    volumes:
+      - mongo_data:/data/db
+    # Puerto NO expuesto al exterior — solo accesible dentro de la red Docker
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Backend Node.js ──────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: zenta_backend
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      NODE_ENV:      production
+      PORT:          5000
+      MONGODB_URI:   mongodb://${MONGO_USER:-zenta}:${MONGO_PASS:-zentapass}@mongo:27017/${MONGO_DB:-zenta_db}?authSource=admin
+      JWT_SECRET:    ${JWT_SECRET}
+      EFIRMA_SECRET: ${EFIRMA_SECRET}
+      CORS_ORIGIN:   ${CORS_ORIGIN:-*}
+    # Puerto NO expuesto al exterior — nginx del intranet hace proxy internamente
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:5000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # ── Intranet (React build + Nginx) ───────────────────────────────────────────
+  intranet:
+    build:
+      context: ./intranet
+      dockerfile: Dockerfile
+    container_name: zenta_intranet
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "80:80"
+
+volumes:
+  mongo_data:
