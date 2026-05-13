@@ -1,0 +1,68 @@
+.page { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.tabs { display: flex; gap: .5rem; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0; }
+.tab { padding: 10px 20px; border: none; background: transparent; color: var(--muted); cursor: pointer; font-size: .9rem; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: .15s; }
+.tab:hover { color: var(--text); }
+.tabActive { color: var(--green) !important; border-bottom-color: var(--green) !important; font-weight: 600; }
+.tabTotal { margin-left: auto; font-size: .82rem; color: var(--muted); }
+
+.toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.filters { display: flex; gap: .5rem; flex-wrap: wrap; }
+.filterBtn { padding: 5px 13px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: .8rem; transition: .15s; }
+.filterBtn:hover { border-color: var(--green); color: var(--green); }
+.filterBtn.active { background: var(--green); border-color: var(--green); color: #000; font-weight: 600; }
+
+.tableWrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+.table th { text-align: left; padding: 10px 12px; background: var(--surface); color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.table td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text); }
+.table tbody tr:hover { background: var(--surface); }
+.uuid { font-family: monospace; font-size: .8rem; color: var(--muted); }
+.rfc  { font-family: monospace; font-size: .78rem; color: var(--muted); }
+.total { font-weight: 700; color: var(--text); }
+.empty { text-align: center; padding: 2rem; color: var(--muted); }
+.loading { text-align: center; padding: 2rem; color: var(--muted); }
+.btnXml { padding: 4px 10px; font-size: .78rem; border: 1px solid var(--border); background: transparent; color: var(--muted); border-radius: 6px; cursor: pointer; }
+.btnXml:hover { border-color: var(--green); color: var(--green); }
+.hint { font-size: .78rem; color: var(--muted); text-align: center; }
+.hint a { color: var(--primary, #2563eb); }
+
+/* ── Sync Panel ─────────────────────────────────────────────────────── */
+.syncPanel {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.syncTitle {
+  font-size: .9rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 .75rem;
+}
+.syncRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem .85rem;
+  margin-bottom: .75rem;
+}
+.syncRow label {
+  font-size: .78rem;
+  font-weight: 600;
+  color: #475569;
+}
+.syncRow input, .syncRow select {
+  padding: .35rem .6rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: .82rem;
+  background: #fff;
+}
+.syncAcciones { display: flex; gap: .6rem; margin-bottom: .5rem; }
+.syncMsg { font-size: .85rem; font-weight: 500; padding: .5rem .75rem; border-radius: 6px; margin-top: .4rem; }
+.syncOk    { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+.syncError { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.syncInfo  { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+.syncHint  { font-size: .78rem; color: #64748b; margin-top: .4rem; }

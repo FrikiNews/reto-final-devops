@@ -1,0 +1,51 @@
+/* ── Reset ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #0f1117;
+  --sidebar-bg: #13151e;
+  --card-bg:    #1a1d2a;
+  --card-bg2:   #21253a;
+  --border:     rgba(255,255,255,.07);
+  --green:      #00d47e;
+  --green-dim:  #00b36a;
+  --muted:      #6b7591;
+  --text:       #e8ecf5;
+  --font:       'Inter', system-ui, sans-serif;
+  --radius:     10px;
+  --t:          .2s ease;
+  --sidebar-w:  240px;
+}
+
+html { height: 100%; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+#root { height: 100%; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button { font-family: var(--font); }
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 18px; border-radius: 8px; font-size: .85rem; font-weight: 600;
+  cursor: pointer; border: none; transition: var(--t);
+}
+.btn-green  { background: var(--green); color: #000; }
+.btn-green:hover { background: var(--green-dim); }
+.btn-ghost  { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+.btn-ghost:hover { border-color: var(--green); color: var(--green); }
+
+.badge {
+  display: inline-flex; align-items: center; padding: 2px 8px;
+  border-radius: 20px; font-size: .72rem; font-weight: 600;
+}
+.badge-red    { background: rgba(255,80,80,.15);   color: #ff5050;  }
+.badge-yellow { background: rgba(255,193,7,.15);   color: #ffc107;  }
+.badge-green  { background: rgba(0,212,126,.15);   color: var(--green); }
+.badge-blue   { background: rgba(99,179,237,.15);  color: #63b3ed;  }

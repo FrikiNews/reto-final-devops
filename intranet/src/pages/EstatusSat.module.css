@@ -1,0 +1,53 @@
+.page { display: flex; flex-direction: column; gap: 1.5rem; }
+
+/* KPIs */
+.kpisWrap { display: flex; flex-direction: column; gap: 1rem; }
+.kpiGroup { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1.5rem; }
+.kpiGroupTitle { font-size: .9rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: .75rem; }
+.kpi { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: .8rem 1rem; display: flex; flex-direction: column; gap: 3px; }
+.kpiVal { font-size: 1.3rem; font-weight: 700; color: var(--text); }
+.kpiLabel { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.green  { color: var(--green) !important; }
+.yellow { color: #f59e0b !important; }
+.red    { color: #ef4444 !important; }
+
+/* Tabs */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+.tab { padding: 10px 20px; border: none; background: transparent; color: var(--muted); cursor: pointer; font-size: .9rem; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: .15s; }
+.tab:hover { color: var(--text); }
+.tabActive { color: var(--green) !important; border-bottom-color: var(--green) !important; font-weight: 600; }
+
+/* Tabla */
+.tableWrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+.table th { text-align: left; padding: 10px 12px; background: var(--surface); color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text); }
+.table tbody tr:hover { background: var(--surface); }
+.uuid { font-family: monospace; font-size: .78rem; color: var(--muted); }
+.total { font-weight: 700; }
+.rowCancelado td { opacity: .55; }
+.rowProceso td { background: rgba(245,158,11,.04); }
+.canceladoMark { font-size: .75rem; color: #ef4444; }
+.empty { text-align: center; padding: 2rem; color: var(--muted); }
+.loading { text-align: center; padding: 2rem; color: var(--muted); }
+
+/* Acciones */
+.accionesWrap { display: flex; flex-direction: column; gap: 4px; }
+.accionBtn {
+  padding: 4px 10px; border-radius: 6px; border: 1px solid var(--accion-color, var(--border));
+  background: transparent; color: var(--accion-color, var(--text)); cursor: pointer; font-size: .75rem;
+  transition: .15s; white-space: nowrap;
+}
+.accionBtn:hover { background: var(--accion-color, var(--surface)); color: #000; }
+
+/* Modal */
+.modalOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 100; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; max-width: 480px; width: 90%; }
+.modalTitle { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; }
+.modalDesc { font-size: .9rem; color: var(--text); margin-bottom: 1rem; line-height: 1.6; }
+.code { font-family: monospace; font-size: .78rem; background: var(--bg); padding: 2px 6px; border-radius: 4px; }
+.modalNote { display: flex; gap: .75rem; background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.3); border-radius: 8px; padding: 1rem; font-size: .82rem; color: var(--text); line-height: 1.5; margin-bottom: 1.5rem; }
+.modalActions { display: flex; gap: .75rem; justify-content: flex-end; }
+
+.hint { font-size: .78rem; color: var(--muted); text-align: center; }

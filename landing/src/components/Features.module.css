@@ -1,0 +1,17 @@
+.section { border-top: 1px solid var(--border); }
+.title { max-width: 640px; }
+.grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px;
+}
+.card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 28px; display: flex; flex-direction: column; gap: 12px;
+  transition: border-color .2s, transform .2s;
+}
+.card:hover { border-color: rgba(0,212,126,.35); transform: translateY(-3px); }
+.icon { font-size: 1.8rem; }
+.cardTitle { font-size: 1rem; font-weight: 700; }
+.cardDesc { font-size: .875rem; color: var(--muted); line-height: 1.65; }
+
+@media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px)  { .grid { grid-template-columns: 1fr; } }

@@ -1,0 +1,31 @@
+.page { display: flex; flex-direction: column; gap: 2rem; }
+.sectionTitle { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; }
+
+/* Periodo */
+.periodo { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+.periodoRow { display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.field input { padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: .9rem; }
+.field input:focus { outline: none; border-color: var(--green); }
+
+/* Resumen grid */
+.resumenGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+.resumenCard { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem; display: flex; align-items: center; gap: 1rem; }
+.resumenIcon { font-size: 1.6rem; }
+.resumenTitle { font-size: .75rem; color: var(--muted); margin-bottom: 2px; }
+.resumenVal { font-size: 1.2rem; font-weight: 700; color: var(--text); }
+.resumenSub { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+.green { color: var(--green) !important; }
+.red   { color: #ef4444 !important; }
+
+/* Descargas */
+.descargasGrid { display: flex; flex-direction: column; gap: .75rem; }
+.descargaCard { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 1rem; }
+.descargaIcon { font-size: 1.8rem; flex-shrink: 0; }
+.descargaInfo { flex: 1; }
+.descargaTitulo { font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.descargaDesc { font-size: .82rem; color: var(--muted); }
+.descargaBtn { flex-shrink: 0; white-space: nowrap; }
+
+.hint { font-size: .8rem; color: var(--muted); text-align: center; padding: .5rem; }

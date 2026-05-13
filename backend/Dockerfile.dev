@@ -1,0 +1,14 @@
+FROM node:20-alpine
+WORKDIR /app
+
+# Instalar dependencias dentro del contenedor (no se usan las del host)
+COPY package*.json ./
+RUN npm install
+
+# Copiar código fuente (será sobreescrito por el volumen en docker-compose)
+COPY src ./src
+
+EXPOSE 5000
+
+# --watch es el hot-reload nativo de Node.js 18+
+CMD ["node", "--watch", "src/app.js"]

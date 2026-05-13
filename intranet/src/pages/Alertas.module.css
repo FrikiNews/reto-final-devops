@@ -1,0 +1,19 @@
+.page { display: flex; flex-direction: column; gap: 20px; }
+.toolbar { display: flex; align-items: center; justify-content: space-between; }
+.count { font-size: 1rem; font-weight: 700; }
+.toggle { display: flex; align-items: center; gap: 8px; font-size: .875rem; color: var(--muted); cursor: pointer; }
+.state { color: var(--muted); padding: 20px 0; }
+.empty { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 60px 20px; color: var(--muted); }
+.emptyIcon { font-size: 2.5rem; }
+.list { display: flex; flex-direction: column; gap: 10px; }
+.item {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  transition: var(--t);
+}
+.item:hover { border-color: rgba(255,255,255,.14); }
+.resuelta { opacity: .5; }
+.itemLeft { display: flex; align-items: flex-start; gap: 14px; flex: 1; min-width: 0; }
+.itemTitle { font-size: .9rem; font-weight: 600; margin-bottom: 4px; }
+.itemDesc  { font-size: .8rem; color: var(--muted); margin-bottom: 4px; }
+.itemDate  { font-size: .72rem; color: var(--muted); }

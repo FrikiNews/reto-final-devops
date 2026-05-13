@@ -1,0 +1,15 @@
+FROM node:20-alpine
+WORKDIR /app
+
+# Instalar dependencias dentro del contenedor
+COPY package*.json ./
+RUN npm install
+
+# Copiar código fuente (será sobreescrito por el volumen en docker-compose)
+COPY vite.config.js ./
+COPY src ./src
+COPY index.html ./
+
+EXPOSE 4000
+
+CMD ["npx", "vite", "--host", "0.0.0.0", "--port", "4000", "--strictPort"]

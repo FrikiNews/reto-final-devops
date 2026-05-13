@@ -1,0 +1,55 @@
+/* ── Reset & Base ────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #0a0d14;
+  --bg-card:    #111827;
+  --bg-card2:   #1a2235;
+  --border:     rgba(255,255,255,.08);
+  --green:      #00d47e;
+  --green-dim:  #00b36a;
+  --green-glow: rgba(0,212,126,.15);
+  --text:       #f0f4ff;
+  --muted:      #8b9ab8;
+  --font:       'Inter', system-ui, sans-serif;
+  --radius:     12px;
+  --transition: .2s ease;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+img { max-width: 100%; }
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+.container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+.section    { padding: 96px 0; }
+.section-label { font-size: .75rem; font-weight: 600; letter-spacing: .1em; color: var(--green); text-transform: uppercase; margin-bottom: 12px; }
+.section-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; line-height: 1.15; }
+.section-sub   { font-size: 1.05rem; color: var(--muted); margin-top: 12px; max-width: 560px; }
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green); color: #000; font-weight: 700; font-size: .95rem;
+  padding: 14px 28px; border-radius: 50px; border: none; cursor: pointer;
+  transition: var(--transition); white-space: nowrap;
+}
+.btn-primary:hover { background: var(--green-dim); transform: translateY(-1px); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--text); font-weight: 600; font-size: .95rem;
+  padding: 13px 28px; border-radius: 50px; border: 1.5px solid var(--border); cursor: pointer;
+  transition: var(--transition);
+}
+.btn-ghost:hover { border-color: var(--green); color: var(--green); }

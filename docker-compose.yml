@@ -1,75 +1,93 @@
 version: "3.9"
 
 # ─────────────────────────────────────────────
-#  Zenta — Docker Compose
-#  Servicios: db (PostgreSQL) | backend (Flask) | frontend (Nginx)
+#  Zenta — Docker Compose (modo desarrollo)
+#  Hot-reload activado en los 3 servicios.
+#  node_modules viven dentro de los contenedores.
 # ─────────────────────────────────────────────
 
 services:
 
-  # ── Base de datos PostgreSQL ──────────────────────────────────────────────
-  db:
-    image: postgres:16-alpine
-    container_name: zenta_db
+  # ── MongoDB ───────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7
+    container_name: zenta_mongo
     restart: unless-stopped
     environment:
-      POSTGRES_DB:       ${DB_NAME:-zenta_db}
-      POSTGRES_USER:     ${DB_USER:-zenta_user}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-zenta_pass}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-zenta}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS:-zentapass}
+      MONGO_INITDB_DATABASE:      ${MONGO_DB:-zenta_db}
     volumes:
-      - db_data:/var/lib/postgresql/data          # datos persistentes
-      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql:ro  # schema inicial
-    ports:
-      - "5432:5432"   # quitar en producción si no necesitas acceso externo
+      - mongo_data:/data/db
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-zenta_user} -d ${DB_NAME:-zenta_db}"]
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  # ── Backend Flask / Gunicorn ──────────────────────────────────────────────
+  # ── Backend Node.js / Express ─────────────────────────────────────────────
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: zenta_backend
     restart: unless-stopped
     depends_on:
-      db:
+      mongo:
         condition: service_healthy
     environment:
-      DB_HOST:     db
-      DB_PORT:     5432
-      DB_NAME:     ${DB_NAME:-zenta_db}
-      DB_USER:     ${DB_USER:-zenta_user}
-      DB_PASSWORD: ${DB_PASSWORD:-zenta_pass}
-      LOG_DIR:     /app/logs
-    volumes:
-      - backend_logs:/app/logs    # logs persistentes
+      PORT:          5000
+      MONGODB_URI:   mongodb://${MONGO_USER:-zenta}:${MONGO_PASS:-zentapass}@mongo:27017/${MONGO_DB:-zenta_db}?authSource=admin
+      JWT_SECRET:    ${JWT_SECRET:-super_secret_change_in_prod}
+      EFIRMA_SECRET: ${EFIRMA_SECRET:-zenta_efirma_aes256_secret_2024_change_in_prod}
+      CORS_ORIGIN:   "*"
+      NODE_ENV:      development
     ports:
-      - "5000:5000"   # opcional: acceso directo a la API
+      - "5000:5000"
+    volumes:
+      - ./backend/src:/app/src      # hot-reload: solo montar el código fuente
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:5000/health || exit 1"]
       interval: 15s
       timeout: 5s
       retries: 5
 
-  # ── Frontend Nginx (HTML estático + proxy) ────────────────────────────────
-  frontend:
+  # ── Landing Page (React / Vite dev server) ────────────────────────────────
+  landing:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: zenta_frontend
+      context: ./landing
+      dockerfile: Dockerfile.dev
+    container_name: zenta_landing
     restart: unless-stopped
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
+    environment:
+      CHOKIDAR_USEPOLLING: "true"   # necesario para hot-reload en Docker
     ports:
-      - "80:80"       # acceso principal: http://localhost
+      - "4000:4000"
+    volumes:
+      - ./landing/src:/app/src      # hot-reload
+      - ./landing/index.html:/app/index.html
+
+  # ── Intranet (React / Vite dev server) ────────────────────────────────────
+  intranet:
+    build:
+      context: ./intranet
+      dockerfile: Dockerfile.dev
+    container_name: zenta_intranet
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      CHOKIDAR_USEPOLLING: "true"   # necesario para hot-reload en Docker
+    ports:
+      - "4001:4001"
+    volumes:
+      - ./intranet/src:/app/src     # hot-reload
+      - ./intranet/index.html:/app/index.html
 
 # ─────────────────────────────────────────────
 #  Volúmenes persistentes
 # ─────────────────────────────────────────────
 volumes:
-  db_data:
-  backend_logs:
+  mongo_data:

@@ -1,16 +1,35 @@
-# Ignorar el .env real (nunca subir credenciales)
+# ── Credenciales / secretos ────────────────────────────────────────────────
 .env
+.env.local
+.env.*.local
+backend/.env
 
-# Logs generados por el backend
+# ── Node / npm ─────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+# ── Vite / React builds ────────────────────────────────────────────────────
+dist/
+dist-ssr/
+*.local
+
+# ── Vite dev cache ─────────────────────────────────────────────────────────
+**/node_modules/.vite/
+
+# ── Logs ───────────────────────────────────────────────────────────────────
+*.log
 backend/logs/
 
-# Caché de Python
+# ── Python (por si acaso) ──────────────────────────────────────────────────
 __pycache__/
 *.pyc
 *.pyo
 .pytest_cache/
-
-# Entornos virtuales
 .venv/
 venv/
 env/
+
+# ── OS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db

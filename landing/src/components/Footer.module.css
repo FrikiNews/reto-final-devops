@@ -1,0 +1,16 @@
+.footer { border-top: 1px solid var(--border); padding: 64px 0 0; }
+.inner { display: flex; gap: 64px; flex-wrap: wrap; }
+.brand { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.logo { display: flex; align-items: center; gap: 8px; }
+.logoBox { width: 32px; height: 32px; border-radius: 7px; background: var(--green); display: grid; place-items: center; }
+.logoText { font-size: 1.1rem; font-weight: 800; }
+.tagline { font-size: .875rem; color: var(--muted); max-width: 240px; }
+.links { display: flex; gap: 48px; }
+.links > div { display: flex; flex-direction: column; gap: 10px; }
+.links a { font-size: .875rem; color: var(--muted); transition: color .2s; }
+.links a:hover { color: var(--text); }
+.colTitle { font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--text); margin-bottom: 4px; }
+.bottom { padding: 24px 0; border-top: 1px solid var(--border); margin-top: 48px; }
+.bottom p { font-size: .8rem; color: var(--muted); }
+
+@media (max-width: 600px) { .inner { flex-direction: column; } .links { flex-wrap: wrap; gap: 32px; } }

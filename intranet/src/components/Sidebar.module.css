@@ -1,0 +1,53 @@
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  padding: 20px 16px; border-bottom: 1px solid var(--border);
+}
+.logoBox {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: var(--green); display: grid; place-items: center; font-size: 1rem; flex-shrink: 0;
+}
+.logoText { font-size: 1rem; font-weight: 800; display: block; }
+.logoBadge {
+  font-size: .65rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--green); display: block;
+}
+.nav { flex: 1; padding: 12px 8px; display: flex; flex-direction: column; gap: 4px; }
+.sectionLabel {
+  font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--muted); padding: 12px 10px 6px;
+}
+.link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: 8px; font-size: .875rem; color: var(--muted);
+  transition: var(--t);
+}
+.link:hover { background: rgba(255,255,255,.04); color: var(--text); }
+.link.active { background: rgba(0,212,126,.1); color: var(--green); font-weight: 600; }
+.icon { font-size: 1rem; }
+.user {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 12px; border-top: 1px solid var(--border);
+}
+.avatar {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--card-bg2);
+  display: grid; place-items: center; font-size: .8rem; font-weight: 700; flex-shrink: 0;
+}
+.userInfo { flex: 1; min-width: 0; }
+.userName { font-size: .8rem; font-weight: 600; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.userRole { font-size: .7rem; color: var(--muted); display: block; text-transform: capitalize; }
+.logout {
+  background: none; border: none; cursor: pointer; color: var(--muted);
+  font-size: 1rem; padding: 4px; transition: color var(--t);
+}
+.logout:hover { color: #ff5050; }
+
+@media (max-width: 768px) { .sidebar { display: none; } }
